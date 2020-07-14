@@ -40,11 +40,22 @@ const App: React.FC = () => {
   const heightInputRef = useRef<HTMLIonInputElement>(null);
 
   const calculateBMI = () => {
-    const enteredWeight = weightInputRef.current?.value;
-    const enteredHeight = heightInputRef.current?.value;
+    const enteredWeight = weightInputRef.current!.value;
+    const enteredHeight = heightInputRef.current!.value;
+
+    if (!enteredHeight || !enteredWeight) {
+      return;
+    }
+
+    const bmi = +enteredWeight / (+enteredHeight * +enteredHeight);
+    console.log(bmi);
   };
 
-  const resetInput = () => {};
+  const resetInput = () => {
+    weightInputRef.current!.value = "";
+    heightInputRef.current!.value = "";
+  };
+
   return (
     <IonApp>
       <IonHeader>
