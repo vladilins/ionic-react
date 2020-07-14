@@ -39,6 +39,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import BmiControls from "./components/BmiControls";
 import BmiResult from "./components/BmiResults";
+import InputControl from "./components/InputControl";
 
 const App: React.FC = () => {
   const [calculatedBmi, setCalculatedBmi] = useState<number>();
@@ -89,6 +90,11 @@ const App: React.FC = () => {
         </IonHeader>
         <IonContent className="ion-padding">
           <IonGrid>
+            <IonRow>
+              <IonCol>
+                <InputControl selectedValue="mkg"></InputControl>
+              </IonCol>
+            </IonRow>
             <IonRow>
               <IonCol>
                 <IonItem>
