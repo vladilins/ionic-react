@@ -11,14 +11,9 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
-  IonIcon,
-  IonCard,
-  IonCardContent,
   IonAlert,
 } from "@ionic/react";
 
-import { calculatorOutline, refreshOutline } from "ionicons/icons";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -63,7 +58,12 @@ const App: React.FC = () => {
       return;
     }
 
-    const bmi = +enteredWeight / (+enteredHeight * +enteredHeight);
+    const weightConversionFactor = calcUnits === "ftlbs" ? 2.2 : 1;
+    const heightConversationFactor = calcUnits === "ftlbs" ? 3.28 : 1;
+    const weight = +enteredWeight / weightConversionFactor;
+    const height = +enteredHeight / heightConversationFactor;
+
+    const bmi = weight / (height * height);
     setCalculatedBmi(bmi);
   };
 
@@ -106,7 +106,9 @@ const App: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonItem>
-                  <IonLabel position="floating">Your Height</IonLabel>
+                  <IonLabel position="floating">
+                    Your Height ({calcUnits === "mkg" ? "meters" : "feet"})
+                  </IonLabel>
                   <IonInput type="number" ref={heightInputRef}></IonInput>
                 </IonItem>
               </IonCol>
@@ -114,7 +116,9 @@ const App: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonItem>
-                  <IonLabel position="floating">Your Weight</IonLabel>
+                  <IonLabel position="floating">
+                    Your Weight ({calcUnits === "mkg" ? "kg" : "pounds"})
+                  </IonLabel>
                   <IonInput type="number" ref={weightInputRef}></IonInput>
                 </IonItem>
               </IonCol>
