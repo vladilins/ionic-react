@@ -15,6 +15,7 @@ import {
   IonIcon,
   IonCard,
   IonCardContent,
+  IonAlert,
 } from "@ionic/react";
 
 import { calculatorOutline, refreshOutline } from "ionicons/icons";
@@ -41,6 +42,7 @@ import BmiResult from "./components/BmiResults";
 
 const App: React.FC = () => {
   const [calculatedBmi, setCalculatedBmi] = useState<number>();
+  const [error, setError] = useState<string>();
 
   const weightInputRef = useRef<HTMLIonInputElement>(null);
   const heightInputRef = useRef<HTMLIonInputElement>(null);
@@ -55,6 +57,7 @@ const App: React.FC = () => {
       +enteredWeight <= 0 ||
       +enteredHeight <= 0
     ) {
+      setError("Please enter a valid (non-negative) input value");
       return;
     }
 
@@ -67,39 +70,50 @@ const App: React.FC = () => {
     heightInputRef.current!.value = "";
   };
 
+  const clearError = () => {
+    setError("");
+  };
+
   return (
-    <IonApp>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>BMI Calculator</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <IonLabel position="floating">Your Height</IonLabel>
-                <IonInput type="number" ref={heightInputRef}></IonInput>
-              </IonItem>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <IonLabel position="floating">Your Weight</IonLabel>
-                <IonInput type="number" ref={weightInputRef}></IonInput>
-              </IonItem>
-            </IonCol>
-          </IonRow>
-          <BmiControls
-            onCalculate={calculateBMI}
-            onReset={resetInput}
-          ></BmiControls>
-          {calculatedBmi && <BmiResult result={calculatedBmi}></BmiResult>}
-        </IonGrid>
-      </IonContent>
-    </IonApp>
+    <React.Fragment>
+      <IonAlert
+        isOpen={!!error}
+        message={error}
+        buttons={[{ text: "Okay", handler: clearError }]}
+      ></IonAlert>
+      <IonApp>
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonTitle>BMI Calculator</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonItem>
+                  <IonLabel position="floating">Your Height</IonLabel>
+                  <IonInput type="number" ref={heightInputRef}></IonInput>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonItem>
+                  <IonLabel position="floating">Your Weight</IonLabel>
+                  <IonInput type="number" ref={weightInputRef}></IonInput>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <BmiControls
+              onCalculate={calculateBMI}
+              onReset={resetInput}
+            ></BmiControls>
+            {calculatedBmi && <BmiResult result={calculatedBmi}></BmiResult>}
+          </IonGrid>
+        </IonContent>
+      </IonApp>
+    </React.Fragment>
   );
 };
 
