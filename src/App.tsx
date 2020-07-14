@@ -44,6 +44,7 @@ import InputControl from "./components/InputControl";
 const App: React.FC = () => {
   const [calculatedBmi, setCalculatedBmi] = useState<number>();
   const [error, setError] = useState<string>();
+  const [calcUnits, setCalcUnits] = useState<"mkg" | "ftlbs">("mkg");
 
   const weightInputRef = useRef<HTMLIonInputElement>(null);
   const heightInputRef = useRef<HTMLIonInputElement>(null);
@@ -75,6 +76,10 @@ const App: React.FC = () => {
     setError("");
   };
 
+  const selectCalcUnitHandler = (selectedValue: "mkg" | "ftlbs") => {
+    setCalcUnits(selectedValue);
+  };
+
   return (
     <React.Fragment>
       <IonAlert
@@ -92,7 +97,10 @@ const App: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <InputControl selectedValue="mkg"></InputControl>
+                <InputControl
+                  selectedValue={calcUnits}
+                  onSelectValue={selectCalcUnitHandler}
+                ></InputControl>
               </IonCol>
             </IonRow>
             <IonRow>
