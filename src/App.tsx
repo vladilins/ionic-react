@@ -12,6 +12,8 @@ import {
   IonLabel,
   IonInput,
   IonAlert,
+  IonCard,
+  IonCardContent,
 } from "@ionic/react";
 
 /* Core CSS required for Ionic components to work properly */
@@ -103,44 +105,59 @@ const App: React.FC = () => {
                 offset-md="3"
                 className="ion-no-padding"
               >
-                <IonGrid className="ion-no-padding">
-                  <IonRow>
-                    <IonCol>
-                      <InputControl
-                        selectedValue={calcUnits}
-                        onSelectValue={selectCalcUnitHandler}
-                      ></InputControl>
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol>
-                      <IonItem>
-                        <IonLabel position="floating">
-                          Your Height ({calcUnits === "mkg" ? "meters" : "feet"}
-                          )
-                        </IonLabel>
-                        <IonInput type="number" ref={heightInputRef}></IonInput>
-                      </IonItem>
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol>
-                      <IonItem>
-                        <IonLabel position="floating">
-                          Your Weight ({calcUnits === "mkg" ? "kg" : "pounds"})
-                        </IonLabel>
-                        <IonInput type="number" ref={weightInputRef}></IonInput>
-                      </IonItem>
-                    </IonCol>
-                  </IonRow>
-                  <BmiControls
-                    onCalculate={calculateBMI}
-                    onReset={resetInput}
-                  ></BmiControls>
-                  {calculatedBmi && (
-                    <BmiResult result={calculatedBmi}></BmiResult>
-                  )}
-                </IonGrid>
+                <IonCard className="ion-no-margin">
+                  <IonCardContent>
+                    <IonGrid className="ion-no-padding">
+                      <IonRow>
+                        <IonCol>
+                          <InputControl
+                            selectedValue={calcUnits}
+                            onSelectValue={selectCalcUnitHandler}
+                          ></InputControl>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonItem>
+                            <IonLabel position="floating">
+                              Your Height (
+                              {calcUnits === "mkg" ? "meters" : "feet"})
+                            </IonLabel>
+                            <IonInput
+                              type="number"
+                              ref={heightInputRef}
+                            ></IonInput>
+                          </IonItem>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonItem>
+                            <IonLabel position="floating">
+                              Your Weight (
+                              {calcUnits === "mkg" ? "kg" : "pounds"})
+                            </IonLabel>
+                            <IonInput
+                              type="number"
+                              ref={weightInputRef}
+                            ></IonInput>
+                          </IonItem>
+                        </IonCol>
+                      </IonRow>
+                      <BmiControls
+                        onCalculate={calculateBMI}
+                        onReset={resetInput}
+                      ></BmiControls>
+                    </IonGrid>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                {calculatedBmi && (
+                  <BmiResult result={calculatedBmi}></BmiResult>
+                )}
               </IonCol>
             </IonRow>
           </IonGrid>
